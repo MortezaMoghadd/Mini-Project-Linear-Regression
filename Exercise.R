@@ -46,3 +46,28 @@ hist(residuals(model2))
 par(mar = c(4, 4, 2, 2), mfrow = c(1, 2)) 
 plot(model2, which = c(1, 2))
 # model 2 is fitted better, has better R-squared and better significance level
+
+
+
+
+
+
+
+
+##   1. Add on to the regression equation that you created in exercise 1 by
+##      generating an interaction term and testing the interaction.
+sts.metro.energy.gr <- subset(states.data, select = c("metro", "energy", "green", "income", "+ region"))
+sts.metro.energy.gr <- na.omit(sts.metro.energy.gr)
+summary(sts.metro.energy.gr)
+cor(sts.metro.energy.gr[,c(1:3)])
+model2 = lm(energy ~ metro * green, data=sts.metro.energy.gr)
+summary(model2)
+coef(summary(model2))
+##   2. Try adding region to the model. Are there significant differences
+##      across the four regions?
+sts.metro.energy.gr <- subset(states.data, select = c("metro", "energy", "green", "income", "region"))
+sts.metro.energy.gr <- na.omit(sts.metro.energy.gr)
+model2 = lm(energy ~ metro * green + region, data=sts.metro.energy.gr)
+summary(model2)
+anova(model2)
+# There is a significant difference between regions!
